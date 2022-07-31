@@ -35,7 +35,7 @@ export default {
     justify-content: center;
   }
 
-    .contact{
+    .contacts{
         font-family: 'Poppins';
         font-size: 20px;
     }

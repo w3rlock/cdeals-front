@@ -1,18 +1,50 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <div id="banner">
+      <!-- <img src="../assets/background.png" alt=""> -->
+      <h1>Find creative <br> people and create</h1>
+      <br>
+      <button>Find</button>
+    </div>
+    <TopCreators/>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import TopCreators from '@/components/TopCreators.vue'
 
 export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
+    name: "HomeView",
+    components: { TopCreators }
 }
+
 </script>
+
+<style>
+  #banner{
+    display: flex;
+    flex-direction: column;
+    background-image: url('../assets/background.png');
+    background-size: cover;
+    height: 1080px;
+    min-height: 100%;
+    align-items: left;
+    justify-content: center;
+    padding: 0 15%;
+  }
+  h1 {
+    font-family: 'Lemon';
+    font-size: 64px;
+    color: #FFF;
+  }
+  button {
+    width: 140px;
+    height: 50px;
+    background-color: #9AFFA4;
+    border-radius: 20px;
+    border: 0px;
+    font-size: 20px;
+    font-family: 'JetBrainsMono-Regular';
+  }
+
+</style>
