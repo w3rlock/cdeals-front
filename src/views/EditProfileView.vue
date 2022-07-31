@@ -55,7 +55,7 @@ export default {
   methods:{
     async editProfile(e){
       e.preventDefault();
-      await axios.put(`http://localhost:3000/api/user`, this.data)
+      await axios.put(`http://78.40.109.118:3000/api/user`, this.data)
       .then(res => {
         this.$router.push(`/profile/?id=${this.data.id}`)
       })
@@ -63,7 +63,7 @@ export default {
   },
 
   created(){
-    axios.get(`http://localhost:3000/api/user/${this.$store.getters.getUserId}`)
+    axios.get(`http://78.40.109.118:3000/api/user/${this.$store.getters.getUserId}`)
     .then(res => {
       this.data = res.data
     })

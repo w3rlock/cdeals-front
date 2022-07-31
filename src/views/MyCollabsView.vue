@@ -46,7 +46,7 @@ import axios from 'axios'
         },
          created() {
           if(this.$store.getters.getIsLogined){
-                axios.get(`http://localhost:3000/api/collabs/${this.$store.getters.getUserId}`)
+                axios.get(`http://78.40.109.118:3000/api/collabs/${this.$store.getters.getUserId}`)
                 .then(response => {
                       this.collabs = response.data;
                       this.filtered = this.collabs;
@@ -70,7 +70,7 @@ import axios from 'axios'
           },
 
           async getCollabs(e){
-            await axios.get(`http://localhost:3000/api/collabs/${this.$store.getters.getUserId}`)
+            await axios.get(`http://78.40.109.118:3000/api/collabs/${this.$store.getters.getUserId}`)
                 .then(response => {
                       this.collabs = response.data;
                 }).catch(error => {

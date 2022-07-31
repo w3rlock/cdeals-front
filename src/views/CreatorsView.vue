@@ -57,14 +57,14 @@ export default {
     }
   },
   created() {
-        axios.get('http://localhost:3000/api/userlistportfolio?category=-1')
+        axios.get('http://78.40.109.118:3000/api/userlistportfolio?category=-1')
           .then(response => {
               this.listOfUser = response.data;
           }).catch(error => {
               console.log(error);
           });
 
-          axios.get('http://localhost:3000/api/category').then(res => {
+          axios.get('http://78.40.109.118:3000/api/category').then(res => {
             this.roles = res.data;
           })
     },
@@ -72,7 +72,7 @@ export default {
   methods: {
     async getCategories(e){
           e.preventDefault();
-          await axios.get(`http://localhost:3000/api/roles/?id=${this.selectedRole}`)
+          await axios.get(`http://78.40.109.118:3000/api/roles/?id=${this.selectedRole}`)
           .then(res => {
             this.category = res.data
           })
@@ -85,7 +85,7 @@ export default {
     },
 
     async getListOfCreators(e){
-      await axios.get(`http://localhost:3000/api/userlistportfolio?category=${this.selectedCategory}`)
+      await axios.get(`http://78.40.109.118:3000/api/userlistportfolio?category=${this.selectedCategory}`)
           .then(response => {
               if (this.search) {
                 this.listOfUser = response.data.filter(item =>

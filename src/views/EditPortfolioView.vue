@@ -62,24 +62,24 @@ export default {
   },
 
   created(){
-    axios.get(`http://localhost:3000/api/portfolio?id=${this.$store.getters.getUserId}`)
+    axios.get(`http://78.40.109.118:3000/api/portfolio?id=${this.$store.getters.getUserId}`)
     .then(res => {
       this.data = res.data[0];
       this.selectedRole = this.data.role;
       this.selectedCategory = this.data.category;
 
-      axios.get(`http://localhost:3000/api/roles/?id=${this.selectedRole}`)
+      axios.get(`http://78.40.109.118:3000/api/roles/?id=${this.selectedRole}`)
           .then(res => {
             this.category = res.data
           })
 
     })
 
-    axios.get('http://localhost:3000/api/category').then(res => {
+    axios.get('http://78.40.109.118:3000/api/category').then(res => {
         this.roles = res.data;
     })
 
-    axios.get(`http://localhost:3000/api/links/${this.$store.getters.getUserId}`).then(res => {
+    axios.get(`http://78.40.109.118:3000/api/links/${this.$store.getters.getUserId}`).then(res => {
         this.links = res.data;
         const ids = this.links.map(object => {
           return object.id;
@@ -106,7 +106,7 @@ export default {
           //     console.log("not avatar")
           //   }
           // }
-          await axios.put(`http://localhost:3000/api/portfolio/`, formData)
+          await axios.put(`http://78.40.109.118:3000/api/portfolio/`, formData)
           .then(res => {
             console.log(res.data)
             this.$store.dispatch('setUserAvatar', {img: res.data})
@@ -121,7 +121,7 @@ export default {
         async getCategories(e){
           e.preventDefault();
           console.log(this.selectedRole);
-          await axios.get(`http://localhost:3000/api/roles/?id=${this.selectedRole}`)
+          await axios.get(`http://78.40.109.118:3000/api/roles/?id=${this.selectedRole}`)
           .then(res => {
             this.category = res.data
           })

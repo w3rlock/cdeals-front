@@ -1,7 +1,7 @@
 <template>
     <!-- <router-link to='/profile/data.user_id' style="text-decoration: none; color: inherit;"> -->
         <div class="wrap card" @click="routeToDetail">
-            <img :src="'http://localhost:3000/api/portfolio/'+data.img" alt="">
+            <img :src="'http://78.40.109.118:3000/api/portfolio/'+data.img" alt="">
             <div style="overflow: hidden;">
                 <div class="wrap2">
                     <p class="username">{{data.username}}</p>

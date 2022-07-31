@@ -44,13 +44,13 @@ export default new Vuex.Store({
   },
   actions: {
     async onLogin({commit}, {email, password}){
-      return await axios.post('http://localhost:3000/api/user/login', {email, password})
+      return await axios.post('http://78.40.109.118:3000/api/user/login', {email, password})
         .then(response => {
             commit('setUserId', response.data.user[0]);
-                axios.get(`http://localhost:3000/api/userportfolio?id=${response.data.user[0].id}`)
+                axios.get(`http://78.40.109.118:3000/api/userportfolio?id=${response.data.user[0].id}`)
                 .then(res => {
-                    commit('setAvatar', `http://localhost:3000/api/portfolio/${res.data.img}`);
-                    // this.state.avatar = `http://localhost:3000/api/portfolio/${res.data.img}`
+                    commit('setAvatar', `http://78.40.109.118:3000/api/portfolio/${res.data.img}`);
+                    // this.state.avatar = `http://78.40.109.118:3000/api/portfolio/${res.data.img}`
                     // localStorage.setItem('avatar', JSON.stringify(this.state.avatar));
                 }).catch(error => {
                     console.log(error);
@@ -70,7 +70,7 @@ export default new Vuex.Store({
 
     setUserAvatar({commit}, {img}){
       console.log(img)
-      commit('setAvatar', `http://localhost:3000/api/portfolio/${img}`);
+      commit('setAvatar', `http://78.40.109.118:3000/api/portfolio/${img}`);
     }
   },
   modules: {

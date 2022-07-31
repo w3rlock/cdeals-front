@@ -49,7 +49,7 @@ export default {
     },
 
     created() {
-        axios.get('http://localhost:3000/api/userlistportfolio?category=-1')
+        axios.get('http://78.40.109.118:3000/api/userlistportfolio?category=-1')
           .then(response => {
               this.listOfUser = response.data;
               this.movieList = this.listOfUser.filter(listOfUser => listOfUser.role == 2)

@@ -7,7 +7,7 @@
     </div>
 
     <div class="cont">
-        <img :src="'http://localhost:3000/api/portfolio/'+data.img" alt="">
+        <img :src="'http://78.40.109.118:3000/api/portfolio/'+data.img" alt="">
 
         <div class="mainCont">
             <div class="cont contName">
@@ -46,7 +46,7 @@
 
             <div class="links">
                 <p>Files</p>
-                <a v-for="item in files" :key="item.id" :href="'http://localhost:3000/api/portfolio/'+item.f_name">{{item.f_name}}</a>
+                <a v-for="item in files" :key="item.id" :href="'http://78.40.109.118:3000/api/portfolio/'+item.f_name">{{item.f_name}}</a>
             </div>
     </div>
 
@@ -94,20 +94,20 @@ export default {
 
   created(){
     
-    axios.get(`http://localhost:3000/api/userportfolio?id=${this.$route.query.id}`)
+    axios.get(`http://78.40.109.118:3000/api/userportfolio?id=${this.$route.query.id}`)
           .then(response => {
               this.data = response.data;
           }).catch(error => {
               console.log(error);
           });
 
-    axios.get(`http://localhost:3000/api/links/${this.$route.query.id}`)
+    axios.get(`http://78.40.109.118:3000/api/links/${this.$route.query.id}`)
     .then(res => {
         this.links = res.data;
         // console.log(this.links)
     })
 
-    axios.get(`http://localhost:3000/api/files?id=${this.$route.query.id}`)
+    axios.get(`http://78.40.109.118:3000/api/files?id=${this.$route.query.id}`)
     .then(res => {
         this.files = res.data;
         // console.log(this.files)

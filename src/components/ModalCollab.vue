@@ -38,7 +38,7 @@ import axios from 'axios'
             this.data.u_from = this.$store.getters.getUserId;
             this.data.u_to = this.$route.query.id;
             this.data.c_status = 'created';
-            await axios.post('http://localhost:3000/api/collabs', this.data)
+            await axios.post('http://78.40.109.118:3000/api/collabs', this.data)
             .then(res => {
               console.log(res);
             })

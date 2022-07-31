@@ -79,7 +79,7 @@ export default {
     async createUser(e){
       e.preventDefault();
       if(this.form.pass == this.form.repeat_pass){
-        await axios.post('http://localhost:3000/api/user', this.form)
+        await axios.post('http://78.40.109.118:3000/api/user', this.form)
         .then(response => {
             console.log(response.data);
             this.$router.push(`/portfolio/?user_id=${response.data}`)

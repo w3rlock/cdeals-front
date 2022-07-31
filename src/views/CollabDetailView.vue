@@ -32,7 +32,7 @@ import Modal from '@/components/Modal.vue';
     components: { Modal },
 
     created(){
-        axios.get(`http://localhost:3000/api/collabid?id=${this.$route.query.id}`)
+        axios.get(`http://78.40.109.118:3000/api/collabid?id=${this.$route.query.id}`)
         .then(res => {
             this.data = res.data;
             this.selectedStatus = this.data.c_status
@@ -56,10 +56,10 @@ import Modal from '@/components/Modal.vue';
             if(status == 'canceled'){
                 this.selectedStatus = 'canceled'
             }
-            await axios.put(`http://localhost:3000/api/changestatus`, {status: this.selectedStatus, id: this.$route.query.id})
+            await axios.put(`http://78.40.109.118:3000/api/changestatus`, {status: this.selectedStatus, id: this.$route.query.id})
             if(this.selectedStatus == 'done'){
-                axios.put(`http://localhost:3000/api/userpoints`, {newPoints: 10, id: this.data.u_from})
-                axios.put(`http://localhost:3000/api/userpoints`, {newPoints: 10, id: this.data.u_to})
+                axios.put(`http://78.40.109.118:3000/api/userpoints`, {newPoints: 10, id: this.data.u_from})
+                axios.put(`http://78.40.109.118:3000/api/userpoints`, {newPoints: 10, id: this.data.u_to})
                 this.msg = "Thank you for the collaboration You've earned +10 points";
                 this.showModal=true;
             }else if(this.selectedStatus == 'canceled'){

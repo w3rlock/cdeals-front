@@ -60,7 +60,7 @@ export default {
   },
 
   created() {
-    axios.get('http://localhost:3000/api/category').then(res => {
+    axios.get('http://78.40.109.118:3000/api/category').then(res => {
         this.roles = res.data;
     })
   },
@@ -86,7 +86,7 @@ export default {
           for (var pair of formData.entries()) {
             console.log(pair[0]+ ', ' + pair[1]); 
           }
-          await axios.post('http://localhost:3000/api/portfolio', formData)
+          await axios.post('http://78.40.109.118:3000/api/portfolio', formData)
           .then(response => {
               console.log(response);
               this.$router.push(`/login`)
@@ -97,7 +97,7 @@ export default {
 
         async getCategories(e){
           e.preventDefault();
-          await axios.get(`http://localhost:3000/api/roles/?id=${this.selectedRole}`)
+          await axios.get(`http://78.40.109.118:3000/api/roles/?id=${this.selectedRole}`)
           .then(res => {
             this.category = res.data
           })
