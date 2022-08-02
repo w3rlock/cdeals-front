@@ -7,9 +7,18 @@
                 <p>From: {{data.from_user}}</p>
                 <p>To: {{data.to_user}}</p>
             </div>
+            <div class="links">
+                <p>Files</p>
+                <a v-for="item in files" :key="item.id" :href="'http://78.40.109.118:3000/api/portfolio/'+item.f_name">{{item.f_name}}</a>
+            </div>
         </div>
-
-        <div class="action">
+        <div class="action" v-if="selectedStatus=='done'">
+            <p class="headText">Status: {{selectedStatus}}</p>
+        </div>
+        <div class="action" v-if="selectedStatus=='canceled'">
+            <p class="headText">Status: {{selectedStatus}}</p>
+        </div>
+        <div class="action" v-if="selectedStatus!='done' && selectedStatus!='canceled'">
             <select name="status" id="status" v-model="selectedStatus">
                 <option v-for="(item, idx) in status" :key="idx" :value="item">{{item}}</option>
             </select>
@@ -37,11 +46,20 @@ import Modal from '@/components/Modal.vue';
             this.data = res.data;
             this.selectedStatus = this.data.c_status
         })
+
+        axios.get(`http://78.40.109.118:3000/api/collabfiles?id=${this.$route.query.id}`)
+        .then(res => {
+            this.files = res.data;
+            // console.log(this.files)
+        })
     },
 
     data(){
         return{
             data:{
+                type: Object
+            },
+            files: {
                 type: Object
             },
             status: ['created', 'in process', 'done', 'canceled'],
@@ -72,6 +90,23 @@ import Modal from '@/components/Modal.vue';
 </script>
 
 <style lang="scss" scoped>
+
+.links{
+    display: flex;
+    flex-direction: column;
+
+    p{
+        font-family: 'Poppins';
+        font-size: 20px;
+    }
+
+    a{
+        text-decoration: none;
+        font-family: 'Poppins';
+        font-size: 16px;
+        margin: 5px
+    }
+}
 
 .wrap{
     display: flex;

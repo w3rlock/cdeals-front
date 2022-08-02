@@ -3,7 +3,7 @@
     <div class="cont">
         <p class="headText">Profile</p>
         <input type="button" value="Edit profile" class="bgButton" @click="editProfile" v-if="data.id == this.$store.getters.getUserId" >
-        <input type="button" value="Offer to collaborate" class="bgButton" @click="showModal=true" v-if="this.$store.getters.getIsLogined">
+        <input type="button" value="Offer to collaborate" class="bgButton" @click="showModal=true" v-if="this.$store.getters.getIsLogined && data.id != this.$store.getters.getUserId">
     </div>
 
     <div class="cont">
@@ -41,7 +41,7 @@
 
         <div class="links">
                 <p>Links</p>
-                <a v-for="item in links" :key="item.id" :href="item.l_name">{{item.l_name}}</a>
+                <a v-for="item in links" :key="item.id" :href="item.l_name">{{item.link_name}}</a>
             </div>
 
             <div class="links">

@@ -5,7 +5,10 @@
     <form @submit="createPortfolio">
 
         <img src='../assets/img/avatar.png' alt="" height="160" width="160" id="blah">
-        <input type="file" class="fileType bgButton" name="avatar" @change="readURL">
+
+        <label for="fileUpload" class="fileType bgButton">Upload Avatar</label>
+        <input type="file" id="fileUpload"  name="avatar" @change="readURL">
+
            <p class="lab">Select role</p>
         <select name="role" id="role" v-model="selectedRole" @change="getCategories">
             <option v-for="item in roles" :key="item.id" :value="item.id">{{item.role_name}}</option>
@@ -18,10 +21,16 @@
         <textarea name="about" id="about" cols="30" rows="10" placeholder="About yourself"></textarea>
         <p class="lab">Portfolio</p>
         <input type="button" value="Add link" class="bgButton" @click="addLink">
-        <input v-for="item in links" :key="item.id" type="text" :name="item.id" v-model="item.value" placeholder="Link">
+        <div v-for="item in links" :key="item.id" style="display: flex; flex-direction: column">
+          <p>{{item.id}} link</p>
+          <input type="text" :name="'name'+item.id" v-model="item.name" placeholder="Name of link">
+          <input type="text" :name="item.id" v-model="item.value" placeholder="Link">
+        </div>
+
 
         <p class="lab">Add file</p>
-        <input type="file" class="bgButton" name="portfile" multiple>
+        <label for="filePortfolio" class="fileType bgButton">Upload file</label>
+        <input type="file" id="filePortfolio" name="portfile" multiple>
         
 
 
@@ -71,8 +80,8 @@ export default {
         },
 
         addLink(){
+          this.links.push({value: '', id: this.numOfLinks, name: ''});
           this.numOfLinks++;
-          this.links.push({value: '', id: this.numOfLinks});
         },
 
         console(link){
@@ -82,10 +91,11 @@ export default {
           e.preventDefault();
           const formData = new FormData(document.querySelector('form'));
           formData.append('user_id', this.$route.query.user_id);
-          formData.append('links', this.links.map(item => item.value));
-          for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-          }
+          formData.append('links', this.links.map(item => [item.name, item.value]));
+          console.log(this.links.map(item => [[item.name], [item.value]]))
+          // for (var pair of formData.entries()) {
+          //   console.log(pair[0]+ ', ' + pair[1]);
+          // }
           await axios.post('http://78.40.109.118:3000/api/portfolio', formData)
           .then(response => {
               console.log(response);
@@ -127,6 +137,11 @@ export default {
     align-items: center;
   }
 
+    input[type="file"] {
+        display: none;
+    }
+
+
   input {
     width: 400px;
     height: 50px;
@@ -153,6 +168,11 @@ export default {
   .icon-inside input {
     color: #5D5FEF;
     padding-left: 40px;
+  }
+
+  .fileType{
+    padding: 5px 10px;
+    border-radius: 10px;
   }
 
 

@@ -36,7 +36,7 @@
       <div class="icon-inside">
         <i class="fa fa-key icon fa-lg"></i>
         <input type="password" name="password2" id="pass2" placeholder="Repeat password" v-model="form.repeat_pass">
-        <p v-if="isPassCorrect">Пароль не совпадает!</p>
+        <p>{{isPassCorrect}}</p>
       </div>
 
       <!-- <router-link to="/portfolio"><input type="button" value="SEND" class="bgButton"></router-link> -->
@@ -68,7 +68,7 @@ export default {
         pass: '',
         repeat_pass: ''
       },
-      isPassCorrect: false,
+      isPassCorrect: '',
     }
   },
 
@@ -84,12 +84,13 @@ export default {
             console.log(response.data);
             this.$router.push(`/portfolio/?user_id=${response.data}`)
         })
-
           .catch(error => {
-            console.log(error);
+            if(error.response.status == 400){
+              this.isPassCorrect = 'Username or Email exist'
+            }
         });
       }else{
-        this.isPassCorrect = true;
+        this.isPassCorrect = 'Passwords not equal';
       }
     },
   }

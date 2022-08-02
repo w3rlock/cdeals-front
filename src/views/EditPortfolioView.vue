@@ -5,7 +5,9 @@
     <form>
 
         <img :src="$store.getters.getAvatar" alt="" height="160" width="160" id="blah">
-        <input type="file" class="fileType bgButton" @change="readURL" name="avatar">
+
+        <label for="fileUpload" class="fileType bgButton">Upload Avatar</label>
+        <input type="file" id="fileUpload"  name="avatar" @change="readURL">
            
         <select name="role" id="role" v-model="selectedRole" @change="getCategories">
             <option v-for="item in roles" :key="item.id" :value="item.id">{{item.role_name}}</option>
@@ -18,11 +20,12 @@
         <textarea name="about" id="about" cols="30" rows="10" placeholder="About yourself" v-model="data.about"></textarea>
         <p class="lab">Portfolio</p>
         <input type="button" value="Add link" class="bgButton" @click="addLink">
-        <p v-for="item in links" :key="item.id" class="links">{{item.l_name}}</p>
+        <a v-for="item in links" :key="item.id" class="links" :href="item.l_name">{{item.link_name}}</a>
         <input v-for="l in newLinks" :key="l.id" type="text" :name="l.id" v-model="l.l_name" placeholder="Link">
 
         <p class="lab">Add file</p>
-        <input type="file" class="bgButton" name="portfile" multiple>
+        <label for="filePortfolio" class="fileType bgButton">Upload file</label>
+        <input type="file" id="filePortfolio" name="portfile" multiple>
         
 
 
@@ -146,8 +149,8 @@ export default {
   form{
     display: flex;
     flex-direction: column;
-    min-height: 1200px;
-    justify-content: space-between;
+    min-height: 1500px;
+    justify-content: space-around;
     align-items: center;
   }
 
@@ -163,6 +166,16 @@ export default {
 
   .icon-inside {
     position: relative;
+    margin: 20px;
+  }
+
+  .fileType{
+    padding: 5px 10px;
+    border-radius: 10px;
+  }
+
+  input[type="file"]{
+        display: none;
   }
 
 
@@ -229,6 +242,8 @@ export default {
       font-family: 'Poppins';
       font-size: 16px;
       color: #5D5FEF;
+      text-decoration: none;
+      text-align: center;
     }
 
     @media only screen and (max-width: 768px) {
