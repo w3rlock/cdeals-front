@@ -65,7 +65,7 @@ import axios from 'axios'
 
 <style lang="scss" scoped>
 .lab{
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 20px;
         color: #5D5FEF;
     }
@@ -83,7 +83,7 @@ import axios from 'axios'
   .bgButton{
     background-color: #5D5FEF;
     color: #FFF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     font-weight: bold;
     border: 0;
@@ -114,7 +114,7 @@ import axios from 'axios'
     button {
     background-color: #5D5FEF;
     color: #FFF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     font-weight: bold;
     border: 0;
@@ -130,7 +130,7 @@ import axios from 'axios'
 
     label{
         font-size: 24px;
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         text-align: left;
     }
 
@@ -140,7 +140,7 @@ import axios from 'axios'
         border-radius: 8px;
         color:#5D5FEF;
         font-size: 20px;
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
     }
 
     textarea{
@@ -148,6 +148,6 @@ import axios from 'axios'
         border-radius: 8px;
         color:#5D5FEF;
         font-size: 20px;
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
     }
 </style>

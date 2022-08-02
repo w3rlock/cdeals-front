@@ -99,7 +99,7 @@ import axios from 'axios'
     border: 2px solid #DADADA;
     border-radius: 8px;
     color: #5D5FEF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     padding: 0 20px;
     margin: 10px 0;
@@ -125,13 +125,13 @@ import axios from 'axios'
 
 
   .title{
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 32px;
     margin: 0;
   }
 
   .desc{
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     margin: 0;
   }
@@ -142,7 +142,7 @@ import axios from 'axios'
     flex-direction: row;
     justify-content:space-between;
     align-items: center;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     margin: 0;
   }

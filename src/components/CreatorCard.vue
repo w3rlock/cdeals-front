@@ -84,7 +84,7 @@ img{
 }
 
 .points {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     color: #414141;
     
@@ -101,7 +101,7 @@ img{
 
 .description {
     font-size: 16px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     color: #414141;
     padding: 0 20px;
     width: 100%;

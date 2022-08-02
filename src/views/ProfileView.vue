@@ -122,7 +122,7 @@ export default {
   .bgButton{
     background-color: #5D5FEF;
     color: #FFF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     font-weight: bold;
     border: 0;
@@ -162,7 +162,7 @@ export default {
 }
 
 .name {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 36px;
@@ -174,7 +174,7 @@ export default {
     background-color: #9AFFA4;
     border-radius: 100%;
     font-size: 24px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -182,14 +182,14 @@ export default {
 }
 
 .description {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
 }
 
 .contacts{
     margin: 0 50px;
     p{
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 20px;
         margin: 0;
     }
@@ -200,13 +200,13 @@ export default {
     flex-direction: column;
 
     p{
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 20px;
     }
 
     a{
         text-decoration: none;
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 16px;
         margin: 5px
     }

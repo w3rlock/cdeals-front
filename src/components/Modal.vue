@@ -40,7 +40,7 @@
 
     p {
     text-align: left;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 32px;
     margin: 20px 30px;
     }
@@ -48,7 +48,7 @@
     button {
     background-color: #5D5FEF;
     color: #FFF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     font-weight: bold;
     border: 0;

@@ -97,7 +97,7 @@ export default {
     border-radius: 8px;
 
     font-size: 20px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
   }
 
   .icon-inside {
@@ -122,7 +122,7 @@ export default {
   .bgButton{
     background-color: #5D5FEF;
     color: #FFF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     font-weight: bold;
     border: 0;
@@ -131,7 +131,7 @@ export default {
   .nobgButton{
     background-color: transparent;
     border: 0;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     color: #5D5FEF;
   }

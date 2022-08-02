@@ -36,7 +36,7 @@ export default {
   }
 
     .contact{
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 20px;
     }
 

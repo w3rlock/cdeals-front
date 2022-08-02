@@ -161,7 +161,7 @@ export default {
     border-radius: 8px;
 
     font-size: 20px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
   }
 
   .icon-inside {
@@ -196,7 +196,7 @@ export default {
   .bgButton{
     background-color: #5D5FEF;
     color: #FFF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     font-weight: bold;
     border: 0;
@@ -205,7 +205,7 @@ export default {
   .nobgButton{
     background-color: transparent;
     border: 0;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     color: #5D5FEF;
   }
@@ -217,7 +217,7 @@ export default {
     border: 2px solid #DADADA;
     border-radius: 8px;
     color: #5D5FEF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
   }
 
@@ -227,11 +227,11 @@ export default {
         border-radius: 8px;
         color: #5D5FEF;
         font-size: 20px;
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
     }
 
     .lab{
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 20px;
         color: #5D5FEF;
 
@@ -239,7 +239,7 @@ export default {
     .links{
       width: 500px;
       // overflow: hidden;
-      font-family: 'Poppins';
+      font-family: 'Poppins', 'Nunito', sans-serif;
       font-size: 16px;
       color: #5D5FEF;
       text-decoration: none;

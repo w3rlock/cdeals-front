@@ -121,7 +121,7 @@ export default {
   }
 
   .wrap3 p {
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 32px;
   }
 
@@ -131,7 +131,7 @@ export default {
     border: 2px solid #DADADA;
     border-radius: 8px;
     font-size: 20px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     padding: 0 20px;
     color: #5D5FEF;
     margin: 30px 0;
@@ -149,7 +149,7 @@ export default {
     border: 2px solid #DADADA;
     border-radius: 8px;
     color: #5D5FEF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     padding: 0 20px;
     margin: 10px 0;

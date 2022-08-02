@@ -15,7 +15,7 @@ body {
 }
 
 .headText{
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-weight: bold;
     font-size: 36px;
 }

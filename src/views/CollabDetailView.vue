@@ -96,13 +96,13 @@ import Modal from '@/components/Modal.vue';
     flex-direction: column;
 
     p{
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 20px;
     }
 
     a{
         text-decoration: none;
-        font-family: 'Poppins';
+        font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 16px;
         margin: 5px
     }
@@ -117,12 +117,12 @@ import Modal from '@/components/Modal.vue';
 }
 
 .title{
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 32px;
     margin: 0;
 }
 .text{
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     margin: 0;
 
@@ -131,7 +131,7 @@ import Modal from '@/components/Modal.vue';
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     margin: 0;
 }
@@ -143,7 +143,7 @@ import Modal from '@/components/Modal.vue';
     border: 2px solid #DADADA;
     border-radius: 8px;
     color: #5D5FEF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     padding: 0 20px;
     margin: 10px 0;
@@ -152,7 +152,7 @@ import Modal from '@/components/Modal.vue';
   .bgButton{
     background-color: #5D5FEF;
     color: #FFF;
-    font-family: 'Poppins';
+    font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 24px;
     font-weight: bold;
     border: 0;
