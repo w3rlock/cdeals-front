@@ -4,7 +4,7 @@
       <!-- <img src="../assets/background.png" alt=""> -->
       <h1>Find creative <br> people and create</h1>
       <br>
-      <button>Find</button>
+      <button @click="find">Find</button>
     </div>
     <TopCreators/>
   </div>
@@ -15,7 +15,12 @@ import TopCreators from '@/components/TopCreators.vue'
 
 export default {
     name: "HomeView",
-    components: { TopCreators }
+    components: { TopCreators },
+    methods:{
+      find(){
+        this.$router.push('/creators')
+      }
+    }
 }
 
 </script>

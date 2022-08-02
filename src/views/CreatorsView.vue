@@ -21,12 +21,12 @@
         <p>Creators</p>
         <input type="text" placeholder="Search" v-model.trim="search" v-on:keyup.enter="getListOfCreators">
         <div style="padding: 0 25px" class="cardContainer" v-if="listOfUser != null">
-        <CreatorCard
-        v-for="user  in listOfUser"
-        :key="user.id"
-        :data="user"
-        />
-      </div>
+          <CreatorCard
+          v-for="user  in listOfUser"
+          :key="user.id"
+          :data="user"
+          />
+        </div>
       </div>
 
       
@@ -107,7 +107,7 @@ export default {
 
   .main{
     margin: 150px 0;
-    padding: 0 13%;
+    padding: 0 5%;
   }
 
   .main>p{

@@ -4,7 +4,7 @@
 
     <form @submit="createPortfolio">
 
-        <img src='../assets/img/avatar.png' alt="" height="160" width="160" id="blah">
+        <img alt="" height="160" width="160" id="blah" :src="url">
 
         <label for="fileUpload" class="fileType bgButton">Upload Avatar</label>
         <input type="file" id="fileUpload"  name="avatar" @change="readURL">
@@ -22,7 +22,7 @@
         <p class="lab">Portfolio</p>
         <input type="button" value="Add link" class="bgButton" @click="addLink">
         <div v-for="item in links" :key="item.id" style="display: flex; flex-direction: column">
-          <p>{{item.id}} link</p>
+          <p class="linkHeads">{{item.id}} link</p>
           <input type="text" :name="'name'+item.id" v-model="item.name" placeholder="Name of link">
           <input type="text" :name="item.id" v-model="item.value" placeholder="Link">
         </div>
@@ -30,7 +30,9 @@
 
         <p class="lab">Add file</p>
         <label for="filePortfolio" class="fileType bgButton">Upload file</label>
-        <input type="file" id="filePortfolio" name="portfile" multiple>
+        <input type="file" id="filePortfolio" name="portfile" multiple @change="fileChanged">
+        <p v-for="(f, id) in file" :key="'file'+id" class="linkHeads">{{f}}</p>
+
         
 
 
@@ -53,9 +55,11 @@ export default {
   data(){
     return{
       selectedFile: null,
+      url: '../assets/img/avatar.png',
       data: {
         type: Object
       },
+      file: [],
       roles: null,
       category: null,
       selectedRole: '',
@@ -77,11 +81,19 @@ export default {
   methods: {
          readURL(event) {
             this.selectedFile = event.target.files[0];
+            this.url = URL.createObjectURL(this.selectedFile);
         },
 
         addLink(){
           this.links.push({value: '', id: this.numOfLinks, name: ''});
           this.numOfLinks++;
+        },
+
+        fileChanged(event){4
+            for (let i = 0; i < event.target.files.length; i++) {
+              const files = event.target.files[i].name;
+              this.file.push(files);
+            }
         },
 
         console(link){
@@ -92,7 +104,7 @@ export default {
           const formData = new FormData(document.querySelector('form'));
           formData.append('user_id', this.$route.query.user_id);
           formData.append('links', this.links.map(item => [item.name, item.value]));
-          console.log(this.links.map(item => [[item.name], [item.value]]))
+          // console.log(this.links.map(item => [[item.name], [item.value]]))
           // for (var pair of formData.entries()) {
           //   console.log(pair[0]+ ', ' + pair[1]);
           // }
@@ -128,6 +140,14 @@ export default {
     margin-top: 100px;
 
   } 
+
+  .linkHeads{
+    font-family: 'Poppins';
+    font-size: 16px;
+    color: #5D5FEF;
+    margin: 10px 0 0 0;
+    padding: 0;
+  }
 
   form{
     display: flex;

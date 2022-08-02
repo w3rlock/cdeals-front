@@ -133,7 +133,7 @@ export default {
 
 .wrap{
     margin: 100px 0;
-    padding: 0 13%;
+    padding: 0 10%;
 }
 
 .cont{
@@ -190,7 +190,7 @@ export default {
     margin: 0 50px;
     p{
         font-family: 'Poppins';
-        font-size: 32px;
+        font-size: 20px;
         margin: 0;
     }
 }
@@ -216,6 +216,15 @@ export default {
   /* For mobile phones: */
   .wrap{
     margin-top: 200px;
+    padding: 0 5%;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  /* For mobile phones: */
+  .wrap{
+    margin-top: 200px;
+    padding: 0 5%;
   }
 }
 

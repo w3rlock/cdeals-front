@@ -102,7 +102,8 @@ import axios from 'axios'
     .modal {
       text-align: center;
       background-color: white;
-      height: 750px;
+      height: 550px;
+      overflow-y: auto;
       width: 430px;
       margin-top: 5%;
       padding: 60px 0;
