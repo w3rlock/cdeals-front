@@ -66,6 +66,7 @@ export default new Vuex.Store({
 
     deleteUser({commit}){
       commit('deleteUserId');
+      router.push(`/login`);
     },
 
     setUserAvatar({commit}, {img}){

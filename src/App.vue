@@ -43,7 +43,8 @@ export default {
       this.$store.dispatch('deleteUser')
     },
     routeToProfile(){
-      this.$router.push(`/profile?id=${this.$store.getters.getUserId}`);
+      this.$router.push( {path: `/profile?id=${this.$store.getters.getUserId}`});
+      // this.$router.go()
     }
   },
 
@@ -74,6 +75,7 @@ header {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  z-index: 1;
   justify-content: space-around;
   align-items: center;
   background-color: #363636;

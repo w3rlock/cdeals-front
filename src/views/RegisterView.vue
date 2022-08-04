@@ -35,7 +35,7 @@
 
       <div class="icon-inside">
         <i class="fa fa-key icon fa-lg"></i>
-        <input type="password" name="password2" id="pass2" placeholder="Repeat password" v-model="form.repeat_pass">
+        <input type="password" name="password2" id="pass2" placeholder="Confirm password" v-model="form.repeat_pass">
         <p>{{isPassCorrect}}</p>
       </div>
 

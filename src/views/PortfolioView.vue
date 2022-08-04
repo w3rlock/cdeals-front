@@ -2,7 +2,7 @@
   <div class="wrap">
     <p class="headText">Portfolio</p>
 
-    <form @submit="createPortfolio">
+    <form @submit="createPortfolio" v-if="!dataSended">
 
         <img alt="" height="160" width="160" id="blah" :src="url">
 
@@ -19,28 +19,34 @@
         </select>
 
         <textarea name="about" id="about" cols="30" rows="10" placeholder="About yourself"></textarea>
-        <p class="lab">Portfolio</p>
+        <!-- <p class="lab">Portfolio</p> -->
+
+
         <input type="button" value="Add link" class="bgButton" @click="addLink">
-        <div v-for="item in links" :key="item.id" style="display: flex; flex-direction: column">
-          <p class="linkHeads">{{item.id}} link</p>
+        <div v-for="(item, index) in links" :key="item.id" style="display: flex; flex-direction: column;">
+          <div style="display: flex; flex-direction: row;  align-items: center;">
+            <p class="linkHeads">{{index+1}} link</p>
+            <input type="button" value="x" class="deleteButton" v-if="links.length!=1" @click="deleteLink(item.id)">
+          </div>
           <input type="text" :name="'name'+item.id" v-model="item.name" placeholder="Name of link">
           <input type="text" :name="item.id" v-model="item.value" placeholder="Link">
         </div>
 
 
-        <p class="lab">Add file</p>
+        <!-- <p class="lab">Add file</p> -->
         <label for="filePortfolio" class="fileType bgButton">Upload file</label>
-        <input type="file" id="filePortfolio" name="portfile" multiple @change="fileChanged">
-        <p v-for="(f, id) in file" :key="'file'+id" class="linkHeads">{{f}}</p>
-
+        <input type="file" id="filePortfolio" name="portfile" multiple ref="fileInput" @change="fileChanged">
+        <div>
+          <div v-for="(f, id) in file" :key="'file'+id" style="display: flex; flex-direction: row;  align-items: center;">
+            <p  class="linkHeads">{{f.name}}</p>
+            <input type="button" value="x" class="deleteButton" @click="deleteFile(f.name)">
+          </div>
+        </div>
         
-
-
-
       <input type="submit" value="SEND" class="bgButton">
 
     </form>
-
+    <div class="loader" v-if="dataSended"></div>
   </div>
 </template>
 
@@ -69,10 +75,12 @@ export default {
         value: '',
         id: 0
       }],
+      dataSended: false,
     }
   },
 
   created() {
+    this.dataSended = false;
     axios.get('http://78.40.109.118:3000/api/category').then(res => {
         this.roles = res.data;
     })
@@ -89,11 +97,33 @@ export default {
           this.numOfLinks++;
         },
 
-        fileChanged(event){4
+        deleteLink(id){
+          if(this.links.length != 1){
+            for(let i=0; i<this.links.length; i++){
+              if(this.links[i].id == id){
+                  this.links.splice(i, 1);
+                  console.log(this.links)
+              }
+            }
+          }
+        },
+
+        fileChanged(event){
             for (let i = 0; i < event.target.files.length; i++) {
-              const files = event.target.files[i].name;
+              const files = event.target.files[i];
+              console.log(files.name)
               this.file.push(files);
             }
+        },
+
+        deleteFile(name){
+          for(let i=0; i<this.file.length; i++){
+            if(this.file[i].name == name){
+                this.file.splice(i, 1);
+            }
+          }
+          this.$refs.fileInput.type = "text"
+          this.$refs.fileInput.type = "file"
         },
 
         console(link){
@@ -101,13 +131,18 @@ export default {
         }, 
         async createPortfolio(e){
           e.preventDefault();
+          this.dataSended = true;
           const formData = new FormData(document.querySelector('form'));
           formData.append('user_id', this.$route.query.user_id);
           formData.append('links', this.links.map(item => [item.name, item.value]));
-          // console.log(this.links.map(item => [[item.name], [item.value]]))
-          // for (var pair of formData.entries()) {
-          //   console.log(pair[0]+ ', ' + pair[1]);
-          // }
+          console.log(this.links.map(item => [[item.name], [item.value]]))
+          formData.delete('portfile');
+          for (let i=0; i<this.file.length; i++) {
+            formData.append('portfile', this.file[i])
+          }
+          for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]);
+          }
           await axios.post('http://78.40.109.118:3000/api/portfolio', formData)
           .then(response => {
               console.log(response);
@@ -130,6 +165,37 @@ export default {
 
 <style lang="scss" scoped>
 
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .deleteButton{
+    margin: 0 5px;
+    color: red;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+
   .wrap{
     display: flex;
     flex-direction: column;
@@ -145,8 +211,10 @@ export default {
     font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 16px;
     color: #5D5FEF;
-    margin: 10px 0 0 0;
+    margin: 10px 0;
     padding: 0;
+    align-items: center;
+    justify-content: center;
   }
 
   form{
@@ -167,7 +235,6 @@ export default {
     height: 50px;
     border: 2px solid #DADADA;
     border-radius: 8px;
-
     font-size: 20px;
     font-family: 'Poppins', 'Nunito', sans-serif;
   }
@@ -203,6 +270,7 @@ export default {
     font-size: 24px;
     font-weight: bold;
     border: 0;
+    margin: 20px 0;
   }
 
   .nobgButton{
@@ -222,6 +290,7 @@ export default {
     color: #5D5FEF;
     font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
+    margin: 10px 0;
   }
 
     textarea{

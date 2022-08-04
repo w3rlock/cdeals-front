@@ -18,19 +18,51 @@
         </select>
 
         <textarea name="about" id="about" cols="30" rows="10" placeholder="About yourself" v-model="data.about"></textarea>
-        <p class="lab">Portfolio</p>
-        <input type="button" value="Add link" class="bgButton" @click="addLink">
-        <a v-for="item in links" :key="item.id" class="links" :href="item.l_name">{{item.link_name}}</a>
-        <input v-for="l in newLinks" :key="l.id" type="text" :name="l.id" v-model="l.l_name" placeholder="Link">
+        <!-- <p class="lab">Portfolio</p> -->
 
-        <p class="lab">Add file</p>
+
+        <div style="display: flex; flex-direction: column">
+          <div style="display: flex; flex-direction: row"  v-for="item in links" :key="item.id">
+            <a class="links" :href="item.l_name">{{item.link_name}}</a>
+            <input type="button" value="x" class="deleteButton" @click="deleteLink(item.id, 'old')">
+          </div>
+        </div>
+
+        <input type="button" value="Add link" class="bgButton" @click="addLink">
+
+        <div v-if="newLinks.length>0">
+            <div v-for="(l, index) in newLinks" :key="l.id" style="display: flex; flex-direction: column">
+            <div style="display: flex; flex-direction: row;  align-items: center;">
+              <p class="linkHeads">{{index+1}} link</p>
+              <input type="button" value="x" class="deleteButton" @click="deleteLink(l.id, 'new')">
+            </div>
+            <input type="text" :name="'name'+l.id" v-model="l.name" placeholder="Name of link">
+            <input  type="text" :name="l.id" v-model="l.value" placeholder="Link">
+          </div>
+        </div>
+        
+
+
+        <!-- <p class="lab">Add file</p> -->
         <label for="filePortfolio" class="fileType bgButton">Upload file</label>
-        <input type="file" id="filePortfolio" name="portfile" multiple>
+
+
+        <div v-for="f in file" :key="'file'+f.id" style="display: flex; flex-direction: row;  align-items: center;">
+            <p  class="linkHeads">{{f.f_name}}</p>
+            <input type="button" value="x" class="deleteButton" @click="deleteFile(f.f_name)">
+        </div>
+        <div v-for="(f, index) in newFile" :key="'file'+index" style="display: flex; flex-direction: row;  align-items: center;">
+            <p  class="linkHeads">{{f.name}}</p>
+            <input type="button" value="x" class="deleteButton" @click="deleteFile(f.name)">
+        </div>
+
+        <input type="file" id="filePortfolio" name="portfile" multiple ref="fileInput" @change="fileChanged">
+        
         
 
 
 
-      <input type="submit" value="SEND" class="bgButton" @click="updatePortfolio">
+      <input type="submit" value="SAVE" class="bgButton" @click="updatePortfolio">
 
     </form>
 
@@ -55,12 +87,15 @@ export default {
       category: null,
       selectedRole: null,
       selectedCategory: null,
-      numOfLinks: 1,
+      numOfLinks: 0,
       links: {
         type: Object
       },
-      newLinks: [
-      ]
+      linksForDelete:[],
+      newLinks: [],
+      file: [],
+      filesForDelete: [],
+      newFile: []
     }
   },
 
@@ -76,6 +111,12 @@ export default {
             this.category = res.data
           })
 
+      axios.get(`http://78.40.109.118:3000/api/files/?id=${this.$store.getters.getUserId}`)
+      .then(res => {
+          this.file = res.data;
+          // console.log(this.file)
+      })
+
     })
 
     axios.get('http://78.40.109.118:3000/api/category').then(res => {
@@ -88,22 +129,71 @@ export default {
           return object.id;
         });
         this.numOfLinks = Math.max(...ids)+1;
-        this.newLinks.push({id: this.numOfLinks, l_name: ""});
+        // this.newLinks.push({id: this.numOfLinks, l_name: ""});
     })
+console.log(this.newLinks.length)
   },
 
   methods: {
 
+          deleteLink(id, type){
+            if(type=='old'){
+              for(let i=0; i<this.links.length; i++){
+                if(this.links[i].id == id){
+                    this.linksForDelete.push(this.links[i].id)
+                    this.links.splice(i, 1);
+                    console.log(this.linksForDelete)
+                }
+              }
+            }else if(type=='new'){
+              for(let i=0; i<this.newLinks.length; i++){
+                if(this.newLinks[i].id == id){
+                    this.linksForDelete.push(this.newLinks[i].id)
+                    this.newLinks.splice(i, 1);
+                }
+              }
+            }
+            
+          },
+        deleteFile(name){
+          for(let i=0; i<this.file.length; i++){
+            if(this.file[i].f_name == name){
+                this.filesForDelete.push(this.file[i].id)
+                this.file.splice(i, 1);
+            }
+          }
+          for(let i=0; i<this.newFile.length; i++){
+            if(this.newFile[i].name == name){
+                this.newFile.splice(i, 1);
+            }
+          }
+          this.$refs.fileInput.type = "text"
+          this.$refs.fileInput.type = "file"
+          console.log(this.filesForDelete)
+        },
+        fileChanged(event){
+            for (let i = 0; i < event.target.files.length; i++) {
+              const files = event.target.files[i];
+              console.log(files.name)
+              this.newFile.push(files);
+            }
+        },
+
         addLink(){
+          this.newLinks.push({value: '', id: this.numOfLinks, name: ''});
           this.numOfLinks++;
-          this.newLinks.push({id: this.numOfLinks, l_name: ""});
         },
 
         async updatePortfolio(e){
           e.preventDefault();
           const formData = new FormData(document.querySelector('form'));
           formData.append('user_id', this.$store.getters.getUserId);
-          formData.append('links', this.newLinks.map(item => item.l_name));
+          formData.append('links', this.newLinks.map(item => [[item.name], [item.value]]));
+          console.log(this.newLinks.map(item => [[item.name], [item.value]]));
+          formData.delete('portfile');
+          for (let i=0; i<this.newFile.length; i++) {
+            formData.append('portfile', this.newFile[i])
+          }
           // for (var pair of formData.entries()) {
           //   if(pair[0] == "avatar" && Object.keys(pair[1]).length == 0){
           //     console.log("not avatar")
@@ -111,10 +201,17 @@ export default {
           // }
           await axios.put(`http://78.40.109.118:3000/api/portfolio/`, formData)
           .then(res => {
-            console.log(res.data)
-            this.$store.dispatch('setUserAvatar', {img: res.data})
+            if(res.data != 'withoutavatar'){
+              this.$store.dispatch('setUserAvatar', {img: res.data})
+            }
             this.$router.push(`/profile/?id=${this.$store.getters.getUserId}`)
           })
+          for(let i=0; i<this.filesForDelete.length; i++){
+            await axios.delete(`http://78.40.109.118:3000/api/deletefile/${this.filesForDelete[i]}`)
+          }
+          for(let i=0; i<this.linksForDelete.length; i++){
+            await axios.delete(`http://78.40.109.118:3000/api/deletelink/${this.linksForDelete[i]}`)
+          }
         },
         
          readURL(event) {
@@ -134,6 +231,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+  .deleteButton{
+    margin: 0 5px;
+    color: red;
+    font-size: 20px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+  }
+
+    .linkHeads{
+    font-family: 'Poppins', 'Nunito', sans-serif;
+    font-size: 16px;
+    color: #5D5FEF;
+    margin: 10px 0;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+  }
 
   .wrap{
     display: flex;
@@ -159,7 +277,7 @@ export default {
     height: 50px;
     border: 2px solid #DADADA;
     border-radius: 8px;
-
+    margin: 5px;
     font-size: 20px;
     font-family: 'Poppins', 'Nunito', sans-serif;
   }
@@ -200,6 +318,7 @@ export default {
     font-size: 24px;
     font-weight: bold;
     border: 0;
+    margin: 10px 0;
   }
 
   .nobgButton{
@@ -208,6 +327,7 @@ export default {
     font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     color: #5D5FEF;
+    margin: 10px 0;
   }
 
   select {
@@ -219,6 +339,7 @@ export default {
     color: #5D5FEF;
     font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
+    margin: 10px 0;
   }
 
     textarea{
@@ -237,13 +358,14 @@ export default {
 
     }
     .links{
-      width: 500px;
-      // overflow: hidden;
       font-family: 'Poppins', 'Nunito', sans-serif;
       font-size: 16px;
       color: #5D5FEF;
+      margin: 10px 0;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
-      text-align: center;
     }
 
     @media only screen and (max-width: 768px) {

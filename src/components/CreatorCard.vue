@@ -50,7 +50,7 @@ img{
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     //flex-wrap: wrap;
 }
 
@@ -64,8 +64,8 @@ img{
 }
 
 .card {
-    max-width: 600px;
-    min-height: 200px;
+    width: 500px;
+    height: 200px;
     border: 2px solid #EBEBEB;
     border-radius: 50px;
     padding: 0 15px;

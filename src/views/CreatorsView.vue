@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <p class="headText">Collaborate</p>
+    <!-- <p class="headText">Creators</p> -->
 
     <div class="wrap3">
 
@@ -10,18 +10,22 @@
             <option v-for="item in roles" :key="item.id" :value="item.id">{{item.role_name}}</option>
         </select>
 
-        <select name="category" id="category" v-model="selectedCategory" @change="getListOfCreators">
+        <select name="category" id="category" v-model="selectedCategory">
             <option v-for="item in category" :key="item.id" :value="item.id">{{item.category}}</option>
         </select>
+        <input type="button" class="bgButton" value="Find" @click="getListOfCreators">
 
         <input type="button" class="bgButton" value="Clear filters" @click="clearFilters">
       </div>
 
-      <div>
+      <div class="creators">
         <p>Creators</p>
-        <input type="text" placeholder="Search" v-model.trim="search" v-on:keyup.enter="getListOfCreators">
-        <div style="padding: 0 25px" class="cardContainer" v-if="listOfUser != null">
-          <CreatorCard
+        <div style="display: flex; flex-direction: row;">
+          <input type="text" placeholder="Search" v-model.trim="search" v-on:keyup.enter="getListOfCreators">
+          <input style="width: 100px" type="button" class="bgButton" value="Find" @click="getListOfCreators">
+        </div>
+        <div class="cardContainer" v-if="listOfUser != null">
+          <CreatorCard class="cards"
           v-for="user  in listOfUser"
           :key="user.id"
           :data="user"
@@ -50,14 +54,14 @@ export default {
     return {
       listOfUser: null,
       roles: null,
-      selectedRole: null,
+      selectedRole: -1,
       category: null,
       selectedCategory: -1,
       search: '',
     }
   },
   created() {
-        axios.get('http://78.40.109.118:3000/api/userlistportfolio?category=-1')
+        axios.get('http://78.40.109.118:3000/api/userlistportfolio?category=-1&role=-1')
           .then(response => {
               this.listOfUser = response.data;
           }).catch(error => {
@@ -79,13 +83,13 @@ export default {
     },
 
     clearFilters(){
-        this.selectedRole = null;
+        this.selectedRole = -1;
         this.selectedCategory = -1;
         this.getListOfCreators()
     },
 
     async getListOfCreators(e){
-      await axios.get(`http://78.40.109.118:3000/api/userlistportfolio?category=${this.selectedCategory}`)
+      await axios.get(`http://78.40.109.118:3000/api/userlistportfolio?category=${this.selectedCategory}&role=${this.selectedRole}`)
           .then(response => {
               if (this.search) {
                 this.listOfUser = response.data.filter(item =>
@@ -97,7 +101,7 @@ export default {
           }).catch(error => {
               console.log(error);
           });
-
+      this.search=''
     }
   }
 }
@@ -108,15 +112,24 @@ export default {
   .main{
     margin: 150px 0;
     padding: 0 5%;
+    min-height: 100%;
   }
 
+  .cardContainer{
+    width: 500px;
+  }
+  
   .main>p{
     text-align: center;
   }
 
+  .cards{
+    margin-left: 0;
+  }
+
   .wrap3 {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     flex-wrap: wrap;  
   }
 
@@ -140,6 +153,7 @@ export default {
   .filter{
     display: flex;
     flex-direction: column;
+    margin: 25px;
   }
 
   select {
@@ -153,6 +167,9 @@ export default {
     font-size: 20px;
     padding: 0 20px;
     margin: 10px 0;
+  }
+  .creators{
+    margin: 0 25px;
   }
 
 @media only screen and (max-width: 768px) {
