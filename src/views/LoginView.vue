@@ -6,16 +6,16 @@
 
       <div class="icon-inside">
         <i class="fa fa-user icon fa-lg"></i>
-        <input type="text" name="email" id="email" placeholder="E-mail">
+        <input type="text" name="email" id="email" placeholder="E-mail" required>
       </div>
 
       <div class="icon-inside">
         <i class="fa fa-key icon fa-lg"></i>
-        <input type="password" name="password" id="pass" placeholder="Password">
+        <input type="password" name="password" id="pass" placeholder="Password" required>
       </div>
-      <p v-if="isLogin">Email or Password is incorrect</p>
+      <p v-if="isLogin" class="incorrect">Email or Password is incorrect</p>
 
-      <input type="submit" value="SEND" class="bgButton">
+      <input type="submit" value="ENTER" class="bgButton">
       <router-link to="/register"><input type="button" value="Sign up" class="nobgButton"></router-link>
 
     </form>
@@ -123,6 +123,11 @@ export default {
     color: #5D5FEF;
   }
 
+  .incorrect {
+    color: #FF0000;
+    font-size: 16px;
+    font-family: 'Poppins', 'Nunito', sans-serif;
+  }
 
 @media only screen and (max-width: 768px) {
   /* For mobile phones: */

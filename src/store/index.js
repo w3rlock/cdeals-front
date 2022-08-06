@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
+import VueMask from 'v-mask'
+
+Vue.use(VueMask);
 
 Vue.use(Vuex)
 

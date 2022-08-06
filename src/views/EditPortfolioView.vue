@@ -1,9 +1,8 @@
 <template>
   <div class="wrap">
+
+    <form v-if="!dataSended">
     <p class="headText">Edit portfolio</p>
-
-    <form>
-
         <img :src="$store.getters.getAvatar" alt="" height="160" width="160" id="blah">
 
         <label for="fileUpload" class="fileType bgButton">Upload Avatar</label>
@@ -65,7 +64,7 @@
       <input type="submit" value="SAVE" class="bgButton" @click="updatePortfolio">
 
     </form>
-
+    <div class="loader" v-if="dataSended"></div>
   </div>
 </template>
 
@@ -95,11 +94,13 @@ export default {
       newLinks: [],
       file: [],
       filesForDelete: [],
-      newFile: []
+      newFile: [],
+      dataSended: false,
     }
   },
 
   created(){
+    this.dataSended = false;
     axios.get(`http://78.40.109.118:3000/api/portfolio?id=${this.$store.getters.getUserId}`)
     .then(res => {
       this.data = res.data[0];
@@ -186,6 +187,7 @@ console.log(this.newLinks.length)
 
         async updatePortfolio(e){
           e.preventDefault();
+          this.dataSended = true;
           const formData = new FormData(document.querySelector('form'));
           formData.append('user_id', this.$store.getters.getUserId);
           formData.append('links', this.newLinks.map(item => [[item.name], [item.value]]));
@@ -204,7 +206,6 @@ console.log(this.newLinks.length)
             if(res.data != 'withoutavatar'){
               this.$store.dispatch('setUserAvatar', {img: res.data})
             }
-            this.$router.push(`/profile/?id=${this.$store.getters.getUserId}`)
           })
           for(let i=0; i<this.filesForDelete.length; i++){
             await axios.delete(`http://78.40.109.118:3000/api/deletefile/${this.filesForDelete[i]}`)
@@ -212,6 +213,7 @@ console.log(this.newLinks.length)
           for(let i=0; i<this.linksForDelete.length; i++){
             await axios.delete(`http://78.40.109.118:3000/api/deletelink/${this.linksForDelete[i]}`)
           }
+          this.$router.push(`/profile/?id=${this.$store.getters.getUserId}`)
         },
         
          readURL(event) {
@@ -231,6 +233,26 @@ console.log(this.newLinks.length)
 </script>
 
 <style lang="scss" scoped>
+
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
   .deleteButton{
     margin: 0 5px;

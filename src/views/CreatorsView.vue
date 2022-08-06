@@ -7,10 +7,12 @@
       <div class="filter">
         <p>Filters</p>
         <select name="role" id="role" v-model="selectedRole" @change="getCategories">
+            <option value="-1" disabled selected>Categories</option>
             <option v-for="item in roles" :key="item.id" :value="item.id">{{item.role_name}}</option>
         </select>
 
         <select name="category" id="category" v-model="selectedCategory">
+            <option value="-1" disabled selected>Roles</option>
             <option v-for="item in category" :key="item.id" :value="item.id">{{item.category}}</option>
         </select>
         <input type="button" class="bgButton" value="Find" @click="getListOfCreators">
@@ -20,9 +22,9 @@
 
       <div class="creators">
         <p>Creators</p>
-        <div style="display: flex; flex-direction: row;">
-          <input type="text" placeholder="Search" v-model.trim="search" v-on:keyup.enter="getListOfCreators">
-          <input style="width: 100px" type="button" class="bgButton" value="Find" @click="getListOfCreators">
+        <div style="display: flex; flex-direction: row; align-items: center;">
+          <input type="text" placeholder="Search" class="search" v-model="search" v-on:keyup.enter="getListOfCreators">
+          <input type="button" class="searchButton" value="Find" @click="getListOfCreators">
         </div>
         <div class="cardContainer" v-if="listOfUser != null">
           <CreatorCard class="cards"
@@ -32,6 +34,8 @@
           />
         </div>
       </div>
+
+      
 
       
 
@@ -130,46 +134,91 @@ export default {
   .wrap3 {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;  
+    flex-wrap: wrap;
   }
 
   .wrap3 p {
     font-family: 'Poppins', 'Nunito', sans-serif;
-    font-size: 32px;
+    font-size: 26px;
+    padding: 0;
+    margin: 0;
   }
 
-  input {
+  .search {
     width: 300px;
-    height: 50px;
+    height: 30px;
     border: 2px solid #DADADA;
     border-radius: 8px;
-    font-size: 20px;
+    font-size: 16px;
     font-family: 'Poppins', 'Nunito', sans-serif;
     padding: 0 20px;
     color: #5D5FEF;
     margin: 30px 0;
   }
 
+  .bgButton{
+    background-color: #5D5FEF;
+    color: #FFF;
+    font-family: 'Poppins', 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 5px;
+    width: 120px;
+    margin: 5px 0;
+  }
+
+  .searchButton{
+    background-color: #5D5FEF;
+    color: #FFF;
+    font-family: 'Poppins', 'Nunito', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border: 0;
+    border-radius: 5px;
+    width: 80px;
+    height: 30px;
+    margin: 0 5px;
+  }
+
   .filter{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 25px;
+    // background-color: #F2F2F2;
+    height: 250px;
+    width: 200px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2); 
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   }
 
   select {
     background-color: transparent;
-    width: 250px;
-    height: 50px;
+    width: 170px;
+    height: 40px;
     border: 2px solid #DADADA;
     border-radius: 8px;
+    background-color: #fff;
     color: #5D5FEF;
     font-family: 'Poppins', 'Nunito', sans-serif;
-    font-size: 20px;
-    padding: 0 20px;
-    margin: 10px 0;
+    font-size: 16px;
+    padding: 0 10px;
+    margin: 5px 0;
   }
   .creators{
     margin: 0 25px;
+    width: 700px;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2); 
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
   }
 
 @media only screen and (max-width: 768px) {

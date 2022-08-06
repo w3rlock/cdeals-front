@@ -122,6 +122,7 @@ footer{
     font-size: 16px;
     margin: 0 10px;
   }
+  z-index: 2;
 }
 
 .user{

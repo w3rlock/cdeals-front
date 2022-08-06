@@ -6,37 +6,39 @@
 
       <div class="icon-inside">
         <i class="fa fa-user icon fa-lg"></i>
-        <input type="text" name="first" id="first" placeholder="First name" v-model="form.first_name">
+        <input type="text" name="first" id="first" placeholder="First name" v-model="form.first_name" required>
       </div>
       <div class="icon-inside">
         <i class="fa fa-user icon fa-lg"></i>
-        <input type="text" name="last" id="last" placeholder="Last name" v-model="form.last_name">
-      </div>
-
-      <div class="icon-inside">
-        <i class="fa fa-user icon fa-lg"></i>
-        <input type="text" name="usernmae" id="usernmae" placeholder="Username" v-model="form.username">
+        <input type="text" name="last" id="last" placeholder="Last name" v-model="form.last_name" required>
       </div>
 
       <div class="icon-inside">
         <i class="fa fa-user icon fa-lg"></i>
-        <input type="text" name="email" id="email" placeholder="E-mail" v-model="form.email">
+        <input :class="{error: isEmailCorrect,}" type="text" name="usernmae" id="usernmae" placeholder="Username" v-model="form.username" required @input="isEmailCorrect=''">
       </div>
 
       <div class="icon-inside">
-        <i class="fa fa-user icon fa-lg"></i>
-        <input type="number" name="phone" id="phone" placeholder="Phone number" v-model="form.phone">
+        <i class="fa fa-at icon fa-lg"></i>
+        <input :class="{error: isEmailCorrect,}" type="text" name="email" id="email" placeholder="E-mail" v-model="form.email" required @input="isEmailCorrect=''">
+      </div>
+
+      <div class="icon-inside">
+        <i class="fa fa-phone icon fa-lg"></i>
+        <input type="text" name="phone" v-mask="'+7(###)-###-##-##'" id="phone" placeholder="Phone number" v-model="form.phone" required>
+      </div>
+
+      <div class="icon-inside">
+        <i class="fa fa-key fa-lg"></i>
+        <input :class="{error: isPassCorrect,}" type="password" name="password" id="pass" placeholder="Password" v-model="form.pass" required @input="isPassCorrect=''">
       </div>
 
       <div class="icon-inside">
         <i class="fa fa-key icon fa-lg"></i>
-        <input type="password" name="password" id="pass" placeholder="Password" v-model="form.pass">
-      </div>
+        <input :class="{error: isPassCorrect,}" type="password" name="password2" id="pass2" placeholder="Confirm password" v-model="form.repeat_pass" required @input="isPassCorrect=''">
+        <p class="incorrect">{{isPassCorrect}}</p>
+        <p class="incorrect">{{isEmailCorrect}}</p>
 
-      <div class="icon-inside">
-        <i class="fa fa-key icon fa-lg"></i>
-        <input type="password" name="password2" id="pass2" placeholder="Confirm password" v-model="form.repeat_pass">
-        <p>{{isPassCorrect}}</p>
       </div>
 
       <!-- <router-link to="/portfolio"><input type="button" value="SEND" class="bgButton"></router-link> -->
@@ -64,11 +66,12 @@ export default {
         last_name: '',
         username: '',
         email: '',
-        phone: '',
+        phone: '+7',
         pass: '',
         repeat_pass: ''
       },
       isPassCorrect: '',
+      isEmailCorrect: ''
     }
   },
 
@@ -86,7 +89,7 @@ export default {
         })
           .catch(error => {
             if(error.response.status == 400){
-              this.isPassCorrect = 'Username or Email exist'
+              this.isEmailCorrect = 'Username or Email exist'
             }
         });
       }else{
@@ -103,15 +106,16 @@ export default {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     align-items: center;
     justify-content: center;
+    padding-top: 100px;
   } 
 
   form{
     display: flex;
     flex-direction: column;
-    height: 600px;
+    height: 700px;
     justify-content: space-between;
     align-items: center;
   }
@@ -121,9 +125,24 @@ export default {
     height: 50px;
     border: 2px solid #DADADA;
     border-radius: 8px;
-
     font-size: 20px;
     font-family: 'Poppins', 'Nunito', sans-serif;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+  .error{
+    border-color: #FF0000;
   }
 
   .icon-inside {
@@ -160,6 +179,13 @@ export default {
     font-family: 'Poppins', 'Nunito', sans-serif;
     font-size: 20px;
     color: #5D5FEF;
+  }
+
+  .incorrect {
+    color: #FF0000;
+    font-size: 16px;
+    font-family: 'Poppins', 'Nunito', sans-serif;
+    text-align: center;
   }
 
   @media only screen and (max-width: 768px) {

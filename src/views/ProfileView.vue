@@ -39,16 +39,53 @@
             <router-link to="/editportfolio" v-if="data.id == this.$store.getters.getUserId"><input type="button" value="Edit portfolio" class="bgButton"></router-link>
         </div>
 
-        <div class="links">
-                <p>Links</p>
-                <a v-for="item in links" :key="item.id" :href="item.l_name">{{item.link_name}}</a>
-            </div>
-
+        <div class="filesAndLinks">
             <div class="links">
-                <p>Files</p>
-                <a v-for="item in files" :key="item.id" :href="'http://78.40.109.118:3000/api/portfolio/'+item.f_name">{{item.f_name}}</a>
+                    <p class="headText">Links</p>
+                    <a v-for="item in links" :key="item.id" :href="item.l_name">{{item.link_name}}</a>
+                </div>
+
+                <div class="links">
+                    <div>
+                        <p class="headText">Video</p>
+                        <!-- <a v-for="item in files" :key="item.id" :href="'http://78.40.109.118:3000/api/portfolio/'+item.f_name">{{item.f_name}}</a> -->
+                        <div v-for="item in files" :key="item.id">
+                            <video class="portVideo" controls v-if="isVideo(item.f_name)">
+                            <source :src="'http://78.40.109.118:3000/api/portfolio/'+ item.f_name" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="headText">Image</p>
+                        <!-- <a v-for="item in files" :key="item.id" :href="'http://78.40.109.118:3000/api/portfolio/'+item.f_name">{{item.f_name}}</a> -->
+                        <div v-for="item in files" :key="item.id">
+                            <img class="portImg" v-if="isImage(item.f_name)" :src="'http://78.40.109.118:3000/api/portfolio/'+ item.f_name">
+                        </div>
+                    </div>
+
+                    <div>
+                        <p class="headText">Audio</p>
+                        <div v-for="item in files" :key="item.id">
+                            <audio controls v-if="isAudio(item.f_name)">
+                                <source :src="'http://78.40.109.118:3000/api/portfolio/'+ item.f_name">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </div>
+
+                     <div>
+                        <p class="headText">Other</p>
+                        <div v-for="item in files" :key="item.id">
+                            <a v-if="isOther(item.f_name)" :href="'http://78.40.109.118:3000/api/portfolio/'+item.f_name">{{item.f_name}}</a>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
             </div>
-    </div>
+        </div>
+        
 
     <ModalCollab v-show="showModal" @close-modal="showModal=false"/>
 
@@ -89,6 +126,40 @@ export default {
 
     editPortfolio(){
         this.$router.push(`/editprofile?id=${this.$store.getters.getUserId}`)
+    },
+
+    isVideo(filename) {
+         if(/\.mp4$/i.test(filename) || /\.mov$/i.test(filename) || /\.mpeg-2$/i.test(filename)){
+            return true;
+        }
+    },
+
+    isImage(filename){
+        if(/\.png$/i.test(filename) || /\.jpg$/i.test(filename) || /\.jpeg$/i.test(filename)){
+            return true;
+        }
+    },
+
+    isAudio(filename){
+        if(/\.m4a$/i.test(filename) || /\.mp3$/i.test(filename) || /\.wav$/i.test(filename) || /\.aac$/i.test(filename)){
+            console.log(filename)
+            return true;
+        }
+    },
+    isOther(filename){
+        if(!(/\.m4a$/i.test(filename) 
+        || /\.mp3$/i.test(filename) 
+        || /\.wav$/i.test(filename) 
+        || /\.aac$/i.test(filename)
+        || /\.mp4$/i.test(filename) 
+        || /\.mov$/i.test(filename)
+        || /\.mpeg-2$/i.test(filename)
+        || /\.png$/i.test(filename) 
+        || /\.jpg$/i.test(filename) 
+        || /\.jpeg$/i.test(filename)
+        )){
+            return true;
+        }
     }
   },
 
@@ -208,8 +279,30 @@ export default {
         text-decoration: none;
         font-family: 'Poppins', 'Nunito', sans-serif;
         font-size: 16px;
-        margin: 5px
+        margin: 5px;
+        color:#5D5FEF;
     }
+}
+
+.filesAndLinks{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.portImg{
+    padding: 20px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2); 
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    width: 500px;
+    margin: 10px;
+}
+.portVideo{
+    width: 600px;
+    margin: 10px;
 }
 
 @media only screen and (max-width: 768px) {
