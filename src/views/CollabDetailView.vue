@@ -19,7 +19,7 @@
             <p class="headText">Status: {{selectedStatus}}</p>
         </div>
         <div class="action" v-if="selectedStatus!='done' && selectedStatus!='canceled'">
-            <select name="status" id="status" v-model="selectedStatus">
+            <select name="status" id="status" v-model="newStatus">
                 <option v-for="(item, idx) in status" :key="idx" :value="item">{{item}}</option>
             </select>
             <div>
@@ -44,7 +44,8 @@ import Modal from '@/components/Modal.vue';
         axios.get(`http://78.40.109.118:3000/api/collabid?id=${this.$route.query.id}`)
         .then(res => {
             this.data = res.data;
-            this.selectedStatus = this.data.c_status
+            this.selectedStatus = this.data.c_status,
+            this.newStatus = this.data.c_status
         })
 
         axios.get(`http://78.40.109.118:3000/api/collabfiles?id=${this.$route.query.id}`)
@@ -66,21 +67,25 @@ import Modal from '@/components/Modal.vue';
             selectedStatus: '',
             showModal: false,
             msg: "Thank you for the collaboration You've earned +10 points",
-            msgCancel: 'We are sorry that you could not implement the project. We hope you will find other like-minded people'
+            msgCancel: 'We are sorry that you could not implement the project. We hope you will find other like-minded people',
+            newStatus: ''
         }
     },
     methods: {
         async modalView(status){
             if(status == 'canceled'){
                 this.selectedStatus = 'canceled'
+                this.newStatus = 'canceled'
             }
-            await axios.put(`http://78.40.109.118:3000/api/changestatus`, {status: this.selectedStatus, id: this.$route.query.id})
-            if(this.selectedStatus == 'done'){
+            await axios.put(`http://78.40.109.118:3000/api/changestatus`, {status: this.newStatus, id: this.$route.query.id})
+            if(this.newStatus == 'done'){
+                this.selectedStatus = 'done'
                 axios.put(`http://78.40.109.118:3000/api/userpoints`, {newPoints: 10, id: this.data.u_from})
                 axios.put(`http://78.40.109.118:3000/api/userpoints`, {newPoints: 10, id: this.data.u_to})
                 this.msg = "Thank you for the collaboration You've earned +10 points";
                 this.showModal=true;
-            }else if(this.selectedStatus == 'canceled'){
+            }else if(this.newStatus == 'canceled'){
+                this.selectedStatus = 'canceled'
                 this.msg = 'We are sorry that you could not implement the project. We hope you will find other like-minded people';
                 this.showModal=true;
             }
